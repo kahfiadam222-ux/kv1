@@ -262,46 +262,138 @@
   wireTabs('filters', 'data-f', renderWorks);
   renderWorks('semua');
 
-  /* ---------- kartu melengkung di hero ---------- */
-  var arc = document.getElementById('arc');
-  var COLORS = [
-    { c: '#A6F2D3' }, { c: '#8BE6F2' }, { c: '#06262E', dark: true },
-    { c: '#5FE3B8' }, { c: '#D6F6F8' }, { c: '#3CC6DC' }
+  /* ---------- kartu platform melengkung di hero ----------
+     Ubah teks, warna, atau urutan kartu di daftar PLATFORM.
+     logo: isi path gambar logo resmi (misal 'img/logo/instagram.svg') kalau mau
+           pakai logo. Kalau kosong, nama platform tampil sebagai teks. */
+  var PLATFORM = [
+    { key: 'tiktok',    name: 'TikTok',    sub: 'Video pendek',    dev: 'phone',  logo: '' },
+    { key: 'facebook',  name: 'Facebook',  sub: 'Halaman & iklan', dev: 'laptop', logo: '' },
+    { key: 'lazada',    name: 'Lazada',    sub: 'Toko online',     dev: 'tablet', logo: '' },
+    { key: 'shopee',    name: 'Shopee',    sub: 'Foto produk',     dev: 'phone',  logo: '' },
+    { key: 'x',         name: 'X',         sub: 'Thread & post',   dev: 'laptop', logo: '' },
+    { key: 'whatsapp',  name: 'WhatsApp',  sub: 'Chat order',      dev: 'phone',  logo: '' },
+    { key: 'instagram', name: 'Instagram', sub: 'Feed & reels',    dev: 'phone',  logo: '' }
   ];
-  var src = DATA.length ? DATA : [{ type: 'slide', title: 'kv1' }];
-  var N = 11;
+
+  function h(tag, cls, kids) {
+    var n = el(tag, cls);
+    (kids || []).forEach(function (k) { n.appendChild(typeof k === 'string' ? document.createTextNode(k) : k); });
+    return n;
+  }
+  function bars(n) { var b = h('div', 'bars'); for (var i = 0; i < n; i++) b.appendChild(el('i')); return b; }
+  function icons(n) { var b = h('div', 'ics'); for (var i = 0; i < n; i++) b.appendChild(el('i')); return b; }
+
+  var SCREEN = {
+    instagram: function () {
+      return [
+        h('div', 'ig-top', [el('span', 'ig-av'), el('b', null, 'kv1boyfromars'), el('span', 'dots3')]),
+        h('div', 'ig-img', [el('small', null, 'PROMO MINGGU INI'), el('b', null, 'Kopi susu beli 2 gratis 1')]),
+        icons(3),
+        bars(2)
+      ];
+    },
+    tiktok: function () {
+      return [
+        h('div', 'tt-side', [el('i', 'av'), el('i'), el('i'), el('i')]),
+        h('div', 'tt-cap', [el('b', null, '@kv1boyfromars'), el('span', null, 'Latte art 15 detik #kopi #fyp'), el('em')])
+      ];
+    },
+    shopee: function () {
+      return [
+        h('div', 'sp-top', [el('span')]),
+        h('div', 'sp-img', [el('small', null, 'Terlaris'), el('b', null, 'Keripik Pedas Level 5')]),
+        h('div', 'sp-info', [el('b', null, 'Rp25.000'), bars(1)]),
+        el('div', 'sp-btn', 'Beli Sekarang')
+      ];
+    },
+    lazada: function () {
+      var g = h('div', 'lz-grid');
+      [['#FFD6C2', 'Rp49rb'], ['#C9E7FF', 'Rp89rb'], ['#FFE8A3', 'Rp35rb'], ['#D7F5E3', 'Rp120rb']].forEach(function (p) {
+        var t = h('div', 'lz-it', [el('span'), el('b', null, p[1])]);
+        t.firstChild.style.background = p[0];
+        g.appendChild(t);
+      });
+      return [h('div', 'lz-top', [el('span')]), el('div', 'lz-ban', 'Flash Sale 10.10'), g];
+    },
+    x: function () {
+      return [
+        h('div', 'x-post', [
+          el('span', 'x-av'),
+          h('div', 'x-body', [
+            h('div', 'x-name', [el('b', null, 'kv1media'), el('span', null, '@kv1media · 2j')]),
+            el('p', null, 'Thread: 5 cara bikin konten usaha kecil yang bikin orang mampir.'),
+            h('div', 'x-card', [bars(2)]),
+            icons(4)
+          ])
+        ]),
+        h('div', 'x-post dim', [el('span', 'x-av'), h('div', 'x-body', [bars(2)])])
+      ];
+    },
+    facebook: function () {
+      return [
+        h('div', 'fb-top', [el('span'), el('i')]),
+        h('div', 'fb-post', [
+          h('div', 'fb-head', [el('span', 'fb-av'), h('div', null, [el('b', null, 'Kedai Kopi Sore'), el('small', null, 'Bersponsor')])]),
+          el('p', null, 'Menu baru minggu ini sudah bisa dipesan.'),
+          h('div', 'fb-img', [el('b', null, 'Menu baru')]),
+          h('div', 'fb-act', [el('span', null, 'Suka'), el('span', null, 'Komentar'), el('span', null, 'Bagikan')])
+        ])
+      ];
+    },
+    whatsapp: function () {
+      return [
+        h('div', 'wa-top', [el('span'), h('div', null, [el('b', null, 'Kedai Kopi Sore'), el('small', null, 'online')])]),
+        h('div', 'wa-chat', [
+          el('div', 'wa-b in', 'Kak, masih buka order?'),
+          el('div', 'wa-b out', 'Masih kak, mau paket berapa?'),
+          el('div', 'wa-b in', 'Paket 3 ya, kirim besok bisa?'),
+          el('div', 'wa-b out', 'Bisa kak, siap dikirim 🙌')
+        ]),
+        h('div', 'wa-in', [el('span'), el('i')])
+      ];
+    }
+  };
+
+  function buildCard(p, i) {
+    var c = el('a', 'card pf-' + p.key);
+    c.href = '#layanan';
+    c.draggable = false;
+    c.setAttribute('aria-label', p.name + ', ' + p.sub);
+    var top = h('div', 'card-top');
+    var brand = el('div', 'card-brand', p.name);
+    if (p.logo) {
+      var lg = el('img', 'card-logo'); lg.src = p.logo; lg.alt = p.name; lg.draggable = false;
+      lg.onerror = function () { lg.remove(); brand.textContent = p.name; };
+      brand.textContent = ''; brand.appendChild(lg);
+    }
+    top.appendChild(brand);
+    top.appendChild(el('div', 'card-sub', p.sub));
+    c.appendChild(top);
+    var dev = h('div', 'dev ' + p.dev + (i % 2 ? ' tilt-r' : ' tilt-l'));
+    var scr = h('div', 'scr scr-' + p.key, SCREEN[p.key]());
+    dev.appendChild(scr);
+    if (p.dev === 'laptop') dev.appendChild(el('div', 'base'));
+    c.appendChild(dev);
+    return c;
+  }
+
+  var arc = document.getElementById('arc');
+  var N = 13;
   var cards = [];
   for (var i = 0; i < N; i++) {
-    var w = src[i % src.length];
-    var col = COLORS[i % COLORS.length];
-    var c = el('a', 'card' + (col.dark ? ' dark' : ''));
-    c.href = '#karya';
-    c.draggable = false;
-    c.style.setProperty('--c', col.c);
-    c.setAttribute('aria-label', (w.title || 'Karya') + ', lihat di bagian karya');
-    c.appendChild(el('div', 'card-tag', (TYPE[w.type] || TYPE.slide).tag));
-    c.appendChild(el('div', 'card-t', w.title || 'kv1'));
-    var m = el('div', 'card-m');
-    var pic = (w.images && w.images.filter(Boolean)[0]) || w.poster;
-    if (pic) {
-      var im = el('img'); im.src = pic; im.alt = ''; im.loading = 'lazy'; im.draggable = false;
-      m.appendChild(im);
-    } else {
-      var mk = el('div', 'mock');
-      for (var k = 0; k < 4; k++) mk.appendChild(el('i'));
-      m.appendChild(mk);
-    }
-    c.appendChild(m);
-    arc.appendChild(c);
-    cards.push(c);
+    var card = buildCard(PLATFORM[i % PLATFORM.length], i);
+    arc.appendChild(card);
+    cards.push(card);
   }
 
   var dragOff = 0, scrollOff = 0, introOff = reduce ? 0 : 4;
-  var LIM = (N - 1) / 2 - 1.5;
+  var LIM = (N - 1) / 2 - 2;
+  function gap(cw) { return cw * (window.innerWidth < 720 ? 0.64 : 0.82); }
   function layout() {
     var cw = cards[0].offsetWidth, ch = cards[0].offsetHeight;
-    var R = cw * 4.2;
-    var step = (cw * 0.8) / R * 180 / Math.PI;
+    var R = cw * (window.innerWidth < 720 ? 3 : 4);
+    var step = gap(cw) / R * 180 / Math.PI;
     var off = Math.max(-LIM, Math.min(LIM, dragOff + scrollOff)) + introOff;
     cards.forEach(function (card, j) {
       var a = (j - (N - 1) / 2 + off) * step;
@@ -332,7 +424,7 @@
     if (startX === null) return;
     var dx = e.clientX - startX;
     if (Math.abs(dx) > 6) moved = true;
-    dragOff = Math.max(-LIM - scrollOff, Math.min(LIM - scrollOff, startOff + dx / (cards[0].offsetWidth * 0.8)));
+    dragOff = Math.max(-LIM - scrollOff, Math.min(LIM - scrollOff, startOff + dx / gap(cards[0].offsetWidth)));
     layout();
   });
   window.addEventListener('pointerup', function () { startX = null; });
