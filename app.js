@@ -378,6 +378,52 @@
     return c;
   }
 
+  /* ---------- visual kartu layanan ---------- */
+  var VIS = {
+    edit: { dev: 'phone', tilt: 'tilt-l', kids: function () {
+      var tracks = [[['#FF8A4C', 3], ['#FF4F6D', 2], ['#FFC14D', 4]], [['#5FE3B8', 5], ['#22C8E6', 3]], [['#8BE6F2', 2], ['#FF8A4C', 6]]];
+      var out = [h('div', 'ed-prev', [el('i')]), h('div', 'ed-time', [el('span', null, '00:07'), el('span', null, '00:15')])];
+      tracks.forEach(function (t) {
+        var row = h('div', 'ed-tr');
+        t.forEach(function (seg) { var b = el('b'); b.style.background = seg[0]; b.style.flex = seg[1]; row.appendChild(b); });
+        out.push(row);
+      });
+      out.push(el('i', 'ed-head'));
+      return out;
+    } },
+    plan: { dev: 'tablet', tilt: 'tilt-r', kids: function () {
+      var g = h('div', 'pl-grid');
+      var on = { 1: '#FF4F6D', 3: '#2F7BFF', 5: '#5FE3B8', 8: '#FF8A4C', 10: '#2F7BFF', 12: '#FF4F6D', 15: '#5FE3B8', 17: '#2F7BFF', 19: '#FF8A4C', 22: '#FF4F6D', 24: '#5FE3B8', 26: '#2F7BFF' };
+      for (var d = 0; d < 28; d++) { var c = el('i', on[d] ? 'on' : ''); if (on[d]) c.style.setProperty('--d', on[d]); g.appendChild(c); }
+      var ch = h('div', 'pl-chart');
+      [30, 42, 38, 55, 61, 72, 88].forEach(function (v) { var b = el('b'); b.style.height = v + '%'; ch.appendChild(b); });
+      return [h('div', 'pl-head', [el('span', null, 'Jadwal Oktober'), el('small', null, '12 konten')]), g, ch];
+    } },
+    web: { dev: 'laptop', tilt: 'tilt-l', kids: function () {
+      return [
+        h('div', 'wb-nav', [el('b', null, 'kedai.'), el('i')]),
+        h('div', 'wb-hero', [h('div', null, [el('h4', null, 'Kopi enak, dekat rumah.'), el('em', null, 'Pesan sekarang')]), el('div', 'wb-img')]),
+        bars(2)
+      ];
+    } },
+    kolab: { dev: 'phone', tilt: 'tilt-r', kids: function () {
+      return [
+        h('div', 'kb-top', [h('span', 'kb-av', [el('i'), el('i')]), h('div', null, [el('b', null, 'kv1boyfromars & brandmu'), el('small', null, 'Kolaborasi')])]),
+        h('div', 'kb-img', [el('small', null, 'KOLABORASI'), el('b', null, 'Rilis rasa baru bareng kv1')]),
+        icons(3),
+        bars(2)
+      ];
+    } }
+  };
+  document.querySelectorAll('.svc-v[data-vis]').forEach(function (box) {
+    var v = VIS[box.getAttribute('data-vis')];
+    if (!v) return;
+    var dev = h('div', 'dev ' + v.dev + (v.tilt ? ' ' + v.tilt : ''));
+    dev.appendChild(h('div', 'scr scr-' + box.getAttribute('data-vis'), v.kids()));
+    if (v.dev === 'laptop') dev.appendChild(el('div', 'base'));
+    box.appendChild(dev);
+  });
+
   var arc = document.getElementById('arc');
   var N = 13;
   var cards = [];
