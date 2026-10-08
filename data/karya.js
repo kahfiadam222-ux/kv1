@@ -16,6 +16,7 @@
    images : daftar link gambar untuk slide, misal ['img/promo-1.jpg', 'img/promo-2.jpg']
    src    : file video langsung (.mp4 / .webm), misal 'video/produk.mp4'
    poster : gambar sampul untuk video src (opsional)
+   html   : file animasi HTML di proyek ini, misal 'motion/reel.html'
    link   : link video atau postingan. Otomatis diputar di halaman untuk:
             YouTube (termasuk Shorts), Instagram (post / reel), TikTok,
             Vimeo, Google Drive (file harus "Anyone with the link"), Canva.
@@ -27,7 +28,7 @@
 
 window.KARYA = [
   { id: 'w1', type: 'slide',  ratio: '4 / 5',  title: 'Carousel promo menu',      desc: 'Contoh slide feed untuk usaha FnB.',             images: [] },
-  { id: 'w2', type: 'motion', ratio: '9 / 16', title: 'Motion graphic reels',     desc: 'Teks dan elemen bergerak untuk reels.',          link: '' },
+  { id: 'w2', type: 'motion', ratio: '9 / 16', title: 'Motion graphic reels kv1', desc: 'Reels promo 10 detik dengan tipografi bergerak.', html: 'motion/reel.html' },
   { id: 'w3', type: 'produk', ratio: '1 / 1',  title: 'Video produk',             desc: 'Video singkat untuk etalase produk.',            link: '' },
   { id: 'w4', type: 'slide',  ratio: '1 / 1',  title: 'Desain price list',        desc: 'Slide daftar harga yang rapi dan mudah dibaca.', images: [] },
   { id: 'w5', type: 'produk', ratio: '9 / 16', title: 'Video produk vertikal',    desc: 'Format story dan reels.',                        link: '' },

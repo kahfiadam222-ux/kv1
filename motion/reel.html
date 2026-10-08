@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>kv1 motion reel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@500;600;700&family=Funnel+Sans:wght@500;700&display=swap" rel="stylesheet">
+<style>
+/* Reels 9:16, durasi 10 detik, berulang. 1rem = 1/10.8 lebar layar (100px di 1080px). */
+:root{--tomato:#FF5A36;--cobalt:#2B3BFF;--ink:#121212;--lime:#D6FF3D;--cream:#F4EEDF;--T:10s}
+*{box-sizing:border-box;margin:0}
+html{font-size:calc(100vw / 10.8);background:var(--ink)}
+body{width:100vw;height:100vh;overflow:hidden;font-family:'Funnel Sans',system-ui,sans-serif}
+.disp{font-family:'Funnel Display',system-ui,sans-serif;letter-spacing:-.05em;line-height:.88}
+.sc{position:absolute;inset:0;overflow:hidden}
+.anim,.anim *{animation-duration:var(--T);animation-iteration-count:infinite;animation-fill-mode:both}
+
+/* lapisan adegan: tiap adegan menyapu masuk dari bawah */
+.s2{background:var(--tomato);animation-name:wipe2}
+.s3{background:var(--cobalt);animation-name:wipe3}
+.s4{background:var(--ink);animation-name:wipe4}
+@keyframes wipe2{0%,24%{clip-path:inset(100% 0 0 0)}28%,100%{clip-path:inset(0 0 0 0)}}
+@keyframes wipe3{0%,49%{clip-path:inset(100% 0 0 0)}53%,100%{clip-path:inset(0 0 0 0)}}
+@keyframes wipe4{0%,74%{clip-path:inset(100% 0 0 0)}78%,100%{clip-path:inset(0 0 0 0)}}
+
+/* adegan 1: kv1 jatuh */
+.s1{background:var(--cream);color:var(--ink)}
+.big{position:absolute;left:.7rem;top:5.2rem;display:flex;font-weight:700;font-size:5.2rem}
+.big span{display:block;animation-name:drop;animation-timing-function:cubic-bezier(.3,1.5,.5,1)}
+.big span:nth-child(2){animation-delay:.12s}
+.big span:nth-child(3){animation-delay:.24s;color:var(--tomato)}
+@keyframes drop{0%{transform:translateY(-140%)}5%,100%{transform:translateY(0)}}
+.sub1{position:absolute;left:.8rem;top:11rem;font-size:.62rem;font-weight:700;letter-spacing:.02em;animation-name:fadeup}
+@keyframes fadeup{0%,7%{opacity:0;transform:translateY(40%)}11%,100%{opacity:1;transform:none}}
+.stk{position:absolute;right:.7rem;top:2.6rem;width:3rem;height:3rem;border-radius:50%;background:var(--lime);display:grid;place-items:center;text-align:center;font-weight:700;font-size:.34rem;letter-spacing:.06em;line-height:1.2;animation-name:stk;animation-timing-function:cubic-bezier(.3,1.6,.5,1)}
+@keyframes stk{0%,9%{transform:scale(0) rotate(-90deg)}14%,100%{transform:scale(1) rotate(-12deg)}}
+.bar1{position:absolute;left:.8rem;right:.8rem;bottom:2.2rem;height:.12rem;background:var(--ink);transform-origin:left;animation-name:grow1}
+@keyframes grow1{0%,4%{transform:scaleX(0)}18%,100%{transform:scaleX(1)}}
+
+/* adegan 2: kata menghentak */
+.s2 .w{position:absolute;left:.7rem;font-weight:700;font-size:2.6rem;color:var(--ink);animation-name:slam;animation-timing-function:cubic-bezier(.2,1.4,.4,1)}
+.s2 .w1{top:4.6rem;animation-delay:2.8s}
+.s2 .w2{top:7.4rem;animation-delay:3.3s;background:var(--ink);color:var(--tomato);padding:0 .15em .08em}
+.s2 .w3{top:10.3rem;animation-delay:3.8s;color:var(--cream)}
+@keyframes slam{0%{transform:scale(1.6);opacity:0}2.5%,100%{transform:scale(1);opacity:1}}
+.s2 .hand{position:absolute;left:.8rem;bottom:2.4rem;font-size:.5rem;font-weight:700;color:var(--ink);animation-name:fadeup;animation-delay:2.6s}
+
+/* adegan 3: harga */
+.s3{color:var(--cream)}
+.s3 .k{position:absolute;left:.8rem;top:4.8rem;font-size:.6rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;animation-name:fadeup;animation-delay:5.3s}
+.s3 .price{position:absolute;left:.6rem;top:5.9rem;font-weight:700;font-size:2.9rem;color:var(--lime);animation-name:zoom;animation-delay:5.45s;animation-timing-function:cubic-bezier(.2,1.4,.4,1);transform-origin:left center}
+@keyframes zoom{0%{transform:scale(.3);opacity:0}3%,100%{transform:scale(1);opacity:1}}
+.s3 .per{position:absolute;left:.8rem;top:8.7rem;font-size:.6rem;font-weight:700;animation-name:fadeup;animation-delay:5.7s}
+.s3 .row{position:absolute;left:.8rem;right:.8rem;top:11rem;display:flex;flex-direction:column;gap:.25rem}
+.s3 .row div{display:flex;justify-content:space-between;align-items:baseline;padding:.28rem 0;border-top:.04rem solid rgba(244,238,223,.35);font-size:.46rem;font-weight:700;animation-name:fadeup}
+.s3 .row div b{font-family:'Funnel Display',system-ui,sans-serif;font-size:.7rem;letter-spacing:-.03em}
+.s3 .row div:nth-child(1){animation-delay:6s}
+.s3 .row div:nth-child(2){animation-delay:6.2s}
+.s3 .row div:nth-child(3){animation-delay:6.4s}
+
+/* adegan 4: ajakan */
+.s4{color:var(--cream)}
+.s4 .t{position:absolute;left:.7rem;top:5.4rem;font-weight:700;font-size:2.3rem}
+.s4 .t span{display:block;animation-name:rise;animation-timing-function:cubic-bezier(.2,1,.3,1)}
+.s4 .t span:nth-child(1){animation-delay:7.9s}
+.s4 .t span:nth-child(2){animation-delay:8.05s;color:var(--lime)}
+@keyframes rise{0%{transform:translateY(60%);opacity:0}3%,100%{transform:none;opacity:1}}
+.s4 .pill{position:absolute;left:.8rem;top:10.6rem;display:flex;align-items:center;gap:.25rem;padding:.3rem .55rem;border-radius:1rem;background:var(--lime);color:var(--ink);font-weight:700;font-size:.52rem;animation-name:pop;animation-delay:8.4s;animation-timing-function:cubic-bezier(.3,1.6,.5,1)}
+@keyframes pop{0%{transform:scale(0)}3%,100%{transform:scale(1)}}
+.s4 .pill i{font-style:normal;display:inline-block;animation-name:nudge;animation-duration:1s;animation-delay:0s}
+@keyframes nudge{0%,100%{transform:translateX(0)}50%{transform:translateX(.12rem)}}
+.s4 .ig{position:absolute;left:.8rem;top:12rem;font-size:.42rem;opacity:.7;animation-name:fadeup;animation-delay:8.6s}
+
+.tick{position:absolute;left:0;bottom:3rem;white-space:nowrap;font-family:'Funnel Display',system-ui,sans-serif;font-weight:600;font-size:.9rem;letter-spacing:-.03em;color:var(--ink);animation-name:tick;animation-timing-function:linear}
+.tick span{color:var(--tomato)}
+@keyframes tick{0%,6%{transform:translateX(100vw)}25%,100%{transform:translateX(-60%)}}
+.s2 .dot{position:absolute;right:-1.5rem;bottom:-1.5rem;width:6rem;height:6rem;border-radius:50%;background:var(--cream);animation-name:roll;animation-delay:2.7s;animation-timing-function:cubic-bezier(.2,1,.3,1)}
+@keyframes roll{0%{transform:translate(60%,60%) scale(.4)}6%,100%{transform:none}}
+.s4 .ghost{position:absolute;left:.5rem;bottom:-1.4rem;font-family:'Funnel Display',system-ui,sans-serif;font-weight:700;font-size:6rem;letter-spacing:-.07em;line-height:1;color:transparent;-webkit-text-stroke:.03rem rgba(244,238,223,.5);animation-name:rise;animation-delay:7.8s}
+/* elemen tetap: logo kecil + garis progres */
+.hud{position:absolute;inset:0;pointer-events:none;mix-blend-mode:difference;color:#fff}
+.hud .lg{position:absolute;left:.8rem;top:.7rem;font-family:'Funnel Display',system-ui,sans-serif;font-weight:700;font-size:.5rem;letter-spacing:-.04em}
+.hud .ct{position:absolute;right:.8rem;top:.72rem;font-size:.32rem;font-weight:700;letter-spacing:.1em}
+.prog{position:absolute;left:.8rem;right:.8rem;top:1.45rem;height:.05rem;background:rgba(255,255,255,.3)}
+.prog i{position:absolute;inset:0;background:#fff;transform-origin:left;animation-name:prog;animation-timing-function:linear}
+@keyframes prog{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@media (prefers-reduced-motion:reduce){.anim,.anim *{animation-play-state:paused!important}}
+</style>
+</head>
+<body>
+<div class="anim">
+  <section class="sc s1">
+    <div class="big disp"><span>k</span><span>v</span><span>1</span></div>
+    <div class="sub1">kreator dan builder digital</div>
+    <div class="stk">OPEN<br>FOR<br>PROJECT</div>
+    <div class="bar1"></div>
+    <div class="tick">konten <span>•</span> video <span>•</span> kelola akun <span>•</span> web <span>•</span> kolab</div>
+  </section>
+  <section class="sc s2">
+    <div class="w w1 disp">konten.</div>
+    <div class="w w2 disp">video.</div>
+    <div class="w w3 disp">web.</div>
+    <div class="dot"></div>
+    <div class="hand">cepat jadi, tetap punya rasa</div>
+  </section>
+  <section class="sc s3">
+    <div class="k">konten &amp; editing</div>
+    <div class="price disp">Rp50rb</div>
+    <div class="per">mulai, per konten</div>
+    <div class="row">
+      <div><span>Paket 3 konten</span><b>Rp120rb</b></div>
+      <div><span>Paket 5 konten</span><b>Rp190rb</b></div>
+      <div><span>Kelola akun, start</span><b>Rp500rb/bln</b></div>
+    </div>
+  </section>
+  <section class="sc s4">
+    <div class="t disp"><span>DM aja</span><span>dulu.</span></div>
+    <div class="pill">@kv1boyfromars <i>→</i></div>
+    <div class="ig">lewat Instagram</div>
+    <div class="ghost">kv1</div>
+  </section>
+  <div class="hud">
+    <div class="lg">kv1</div>
+    <div class="ct">REELS</div>
+    <div class="prog"><i></i></div>
+  </div>
+</div>
+</body>
+</html>
