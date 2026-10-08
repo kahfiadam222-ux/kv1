@@ -27,7 +27,7 @@
 
 window.KARYA = [
   { id: 'w1', type: 'slide',  ratio: '4 / 5',  title: 'Carousel promo menu',      desc: 'Contoh slide feed untuk usaha FnB.',             images: [] },
-  { id: 'w2', type: 'motion', ratio: '9 / 16', title: 'Motion graphic reels',     desc: 'Teks dan elemen bergerak untuk reels.',          src: 'video/motion-reels.mp4' },
+  { id: 'w2', type: 'motion', ratio: '9 / 16', title: 'Motion graphic reels',     desc: 'Teks dan elemen bergerak untuk reels.',          link: '' },
   { id: 'w3', type: 'produk', ratio: '1 / 1',  title: 'Video produk',             desc: 'Video singkat untuk etalase produk.',            link: '' },
   { id: 'w4', type: 'slide',  ratio: '1 / 1',  title: 'Desain price list',        desc: 'Slide daftar harga yang rapi dan mudah dibaca.', images: [] },
   { id: 'w5', type: 'produk', ratio: '9 / 16', title: 'Video produk vertikal',    desc: 'Format story dan reels.',                        link: '' },
