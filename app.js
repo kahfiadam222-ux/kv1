@@ -497,7 +497,13 @@
   var mgs = document.querySelectorAll('.mg');
   if ('IntersectionObserver' in window) {
     var io = new IntersectionObserver(function (es) {
-      es.forEach(function (e) { e.target.classList.toggle('is-on', e.isIntersecting); });
+      es.forEach(function (e) {
+        e.target.classList.toggle('is-on', e.isIntersecting);
+        var v = e.target.querySelector('video.mg-vid');
+        if (!v) return;
+        if (e.isIntersecting && !reduce) { var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); }
+        else v.pause();
+      });
     }, { threshold: 0.25 });
     mgs.forEach(function (m) { io.observe(m); });
   } else {
