@@ -477,3 +477,8 @@ p{margin:0}
 .co-n{font-size:13px;color:rgba(232,247,245,.6);line-height:1.45}
 @media (max-width:900px){.calc{grid-template-columns:1fr}}
 @media (max-width:420px){.seg button{font-size:13px}}
+
+/* area sentuh footer */
+.foot-col{gap:0}
+.foot-col a{display:flex;align-items:center;min-height:40px}
+.foot-bot a{display:inline-flex;align-items:center;min-height:40px}

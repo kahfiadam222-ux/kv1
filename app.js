@@ -153,22 +153,18 @@
     }
     function render() {
       var n = st.n, b = best(n), total, kind, lines, save = '', note;
-      var single = n * 50;
+      var extra = Math.max(0, n - 12);
       if (st.mode === 'konten') {
         total = b.total; kind = 'Paket konten'; note = 'Harga per paket dan sudah termasuk editing. Format bisa dicampur.';
         lines = Object.keys(b.parts).map(function (t) { return b.parts[t] + ' x ' + t; }).join(' + ');
-        if (single > total) save = 'Hemat Rp' + rp(single - total) + 'rb dari satuan';
-        if (total > PLAN.starter) {
-          save = 'Starter kelola akun Rp500rb lebih hemat Rp' + rp(total - PLAN.starter) + 'rb';
-          lines += '. Kelola akun Starter sekitar 8 sampai 12 konten per bulan.';
-          if (n > 12) save = 'Kelola akun lebih pas untuk ' + n + ' konten';
-        }
+        if (n * 50 > total) save = 'Hemat Rp' + rp(n * 50 - total) + 'rb dari satuan';
       } else if (st.mode === 'strategi') {
-        total = PLAN.growth; kind = 'Kelola akun Growth'; note = 'Harga start. Konten rutin, strategi, dan laporan bulanan.';
+        total = PLAN.growth + extra * 100; kind = 'Kelola akun Growth';
+        note = 'Harga start untuk 12 konten, tiap konten tambahan Rp100rb. Strategi dan laporan bulanan sudah termasuk.';
         lines = n + ' konten per bulan ditambah strategi dan laporan.';
-        if (b.total > total) save = 'Lebih hemat Rp' + rp(b.total - total) + 'rb dari beli paket konten';
       } else {
-        total = PLAN.penuh; kind = 'Kelola penuh'; note = 'Harga start. Konten, caption, dan jadwal posting aku yang pegang.';
+        total = Math.min(3500, PLAN.penuh + extra * 140); kind = 'Kelola penuh';
+        note = 'Harga start untuk 12 konten, tiap konten tambahan Rp140rb, maksimal Rp3,5jt. Caption dan jadwal posting aku yang pegang.';
         lines = n + ' konten per bulan, caption, dan jadwal posting.';
       }
       document.getElementById('cKind').textContent = kind;
@@ -209,13 +205,11 @@
     document.getElementById('cGo').addEventListener('click', function () {
       var msg = 'Halo kv1, aku mau tanya ' + last.kind + ': ' + st.n + ' konten per bulan, format ' + names() +
         '. Estimasi di situs Rp' + rp(last.total) + 'rb.';
-      var btn = this, old = btn.textContent;
-      function done(t) { btn.textContent = t; setTimeout(function () { btn.textContent = old; }, 2200); }
-      function open() { window.open(DM, '_blank', 'noopener'); }
-      try {
-        navigator.clipboard.writeText(msg).then(function () { done('Tersalin, tempel di DM'); open(); },
-          function () { done('Buka DM, lalu ketik pesanmu'); open(); });
-      } catch (e) { done('Buka DM, lalu ketik pesanmu'); open(); }
+      var btn = this, old = btn.textContent, ok = false;
+      try { navigator.clipboard.writeText(msg).catch(function () { btn.textContent = 'Buka DM, lalu ketik pesanmu'; }); ok = true; } catch (e) { ok = false; }
+      btn.textContent = ok ? 'Tersalin, tempel di DM' : 'Buka DM, lalu ketik pesanmu';
+      setTimeout(function () { btn.textContent = old; }, 2600);
+      window.open(DM, '_blank', 'noopener');
     });
     pct(); render();
   })();
