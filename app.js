@@ -139,15 +139,24 @@
       var a = Object.keys(st.fmt).filter(function (k) { return st.fmt[k]; });
       return a.length ? a.join(', ') : 'video';
     }
+    function bar(v) { var t = document.getElementById('cBarT'); if (t) t.textContent = fm(v); }
+    (function () {
+      var cb = document.getElementById('cBar'), box = document.getElementById('calc'), out = box.querySelector('.calc-out');
+      if (!cb || !('IntersectionObserver' in window)) return;
+      var inCalc = false, inOut = false;
+      function up() { cb.classList.toggle('on', inCalc && !inOut); }
+      new IntersectionObserver(function (es) { inCalc = es[0].isIntersecting; up(); }, { threshold: 0.15 }).observe(box);
+      new IntersectionObserver(function (es) { inOut = es[0].isIntersecting; up(); }, { threshold: 0.35 }).observe(out);
+    })();
     function count(to) {
       cancelAnimationFrame(raf);
       var el0 = document.getElementById('cTotal'), from = shown;
-      if (reduce || from === to) { shown = to; el0.textContent = fm(to); return; }
+      if (reduce || from === to) { shown = to; el0.textContent = fm(to); bar(to); return; }
       var t0 = performance.now();
       (function tick(t) {
         var k = Math.min(1, (t - t0) / 450), e = 1 - Math.pow(1 - k, 3);
         shown = Math.round(from + (to - from) * e);
-        el0.textContent = fm(shown);
+        el0.textContent = fm(shown); bar(shown);
         if (k < 1) raf = requestAnimationFrame(tick);
       })(t0);
     }
@@ -168,6 +177,7 @@
         lines = n + ' konten per bulan, caption, dan jadwal posting.';
       }
       document.getElementById('cKind').textContent = kind;
+      var bk = document.getElementById('cBarK'); if (bk) bk.textContent = kind;
       document.getElementById('cBreak').textContent = lines;
       document.getElementById('cSave').textContent = save;
       document.getElementById('cNote').textContent = note;

@@ -494,3 +494,14 @@ p{margin:0}
 
 /* 03 video motion web */
 .mg-vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+
+/* harga ikut terlihat saat menggeser slider (HP) */
+.cbar{display:none}
+@media (max-width:900px){
+.cbar{display:flex;position:fixed;left:12px;right:12px;bottom:max(12px,env(safe-area-inset-bottom));z-index:40;align-items:center;justify-content:space-between;gap:12px;padding:12px 18px;border-radius:999px;background:#06262E;color:#E8F7F5;box-shadow:0 14px 30px -10px rgba(0,0,0,.5);transform:translateY(140%);opacity:0;pointer-events:none;transition:transform .4s cubic-bezier(.2,.8,.2,1),opacity .3s}
+.cbar.on{transform:none;opacity:1}
+.cbar-k{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:var(--mint)}
+.cbar-p{display:flex;align-items:baseline;gap:5px}
+.cbar-p b{font-family:var(--display);font-weight:500;font-size:26px;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.cbar-p small{font-size:13px;color:rgba(232,247,245,.7)}
+}
