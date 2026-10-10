@@ -184,6 +184,48 @@
   </div>
 </section>
 
+<section id="hitung" class="sec">
+  <div class="wrap">
+    <div class="head">
+      <div class="label rv">Kalkulator</div>
+      <h2 class="h2 rv">Hitung paketmu sendiri</h2>
+    </div>
+    <div class="calc rv" id="calc">
+      <div class="calc-in">
+        <div class="cf">
+          <div class="cf-h"><label for="cN">Konten per bulan</label><output id="cNv" for="cN">8</output></div>
+          <input type="range" id="cN" min="1" max="30" value="8" aria-describedby="cNote">
+          <div class="cf-s" aria-hidden="true"><span>1</span><span>10</span><span>20</span><span>30</span></div>
+        </div>
+        <div class="cf">
+          <div class="cf-h"><span id="cMl">Seberapa jauh aku bantu</span></div>
+          <div class="seg" id="cMode" role="radiogroup" aria-labelledby="cMl">
+            <button type="button" role="radio" aria-checked="true" class="on" data-m="konten">Cuma konten</button>
+            <button type="button" role="radio" aria-checked="false" data-m="strategi">Plus strategi</button>
+            <button type="button" role="radio" aria-checked="false" data-m="penuh">Serahkan semua</button>
+          </div>
+        </div>
+        <div class="cf">
+          <div class="cf-h"><span id="cFl">Format</span></div>
+          <div class="filters" id="cFmt" role="group" aria-labelledby="cFl">
+            <button type="button" class="chip on" aria-pressed="true" data-f="video">Video</button>
+            <button type="button" class="chip" aria-pressed="false" data-f="slide">Slide</button>
+            <button type="button" class="chip" aria-pressed="false" data-f="motion">Motion</button>
+          </div>
+        </div>
+      </div>
+      <div class="calc-out" aria-live="polite">
+        <div class="co-k" id="cKind">Paket konten</div>
+        <div class="co-p"><span class="co-rp">Rp</span><b id="cTotal">0</b><span class="co-u" id="cUnit">/bulan</span></div>
+        <div class="co-b" id="cBreak"></div>
+        <div class="co-save" id="cSave"></div>
+        <button type="button" class="pill co-btn" id="cGo">Salin &amp; buka DM</button>
+        <p class="co-n" id="cNote">Harga kelola akun adalah harga start. Final disepakati lewat DM.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="alur" class="sec">
   <div class="wrap">
     <div class="head">

@@ -31,6 +31,6 @@ window.KARYA = [
   { id: 'w2', type: 'motion', ratio: '9 / 16', title: 'Motion graphic reels kv1', desc: 'Reels promo 12 detik, gaya iklan aplikasi.', html: 'motion/reel.html' },
   { id: 'w3', type: 'produk', ratio: '1 / 1',  title: 'Video produk',             desc: 'Video singkat untuk etalase produk.',            link: '' },
   { id: 'w4', type: 'slide',  ratio: '1 / 1',  title: 'Desain price list',        desc: 'Slide daftar harga yang rapi dan mudah dibaca.', images: [] },
-  { id: 'w5', type: 'produk', ratio: '9 / 16', title: 'Video produk vertikal',    desc: 'Format story dan reels.',                        link: '' },
+  { id: 'w5', type: 'produk', ratio: '9 / 16', title: 'Video produk vertikal',    desc: 'Format story dan reels.',                        src: 'video/produk-vertikal.mp4', poster: 'video/produk-vertikal-poster.jpg' },
   { id: 'w6', type: 'motion', ratio: '16 / 9', title: 'Motion graphic landscape', desc: 'Untuk YouTube, presentasi, atau web.',           link: '' }
 ];

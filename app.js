@@ -110,6 +110,116 @@
   wireTabs('priceTabs', 'data-t', renderPrices);
   renderPrices('konten');
 
+  /* ---------- kalkulator ---------- */
+  (function () {
+    var PACK = [{ n: 5, p: 190, t: 'paket 5' }, { n: 3, p: 120, t: 'paket 3' }, { n: 1, p: 50, t: 'satuan' }];
+    var PLAN = { starter: 500, growth: 750, penuh: 1000 };
+    var DM = 'https://www.instagram.com/kv1boyfromars/';
+    var box = document.getElementById('calc');
+    if (!box) return;
+    var range = document.getElementById('cN');
+    var st = { n: +range.value, mode: 'konten', fmt: { video: true } };
+    var shown = 0, raf = 0, last = null;
+
+    function rp(v) { return v.toLocaleString('id-ID'); }
+    function fm(v) { return v >= 1000 ? (v / 1000).toString().replace('.', ',') + 'jt' : rp(v) + 'rb'; }
+    function best(n) {
+      var cost = [0], pick = [null], i;
+      for (i = 1; i <= n; i++) {
+        cost[i] = Infinity;
+        PACK.forEach(function (k) {
+          if (i >= k.n && cost[i - k.n] + k.p < cost[i]) { cost[i] = cost[i - k.n] + k.p; pick[i] = k; }
+        });
+      }
+      var parts = {}, r = n;
+      while (r > 0) { var k = pick[r]; parts[k.t] = (parts[k.t] || 0) + 1; r -= k.n; }
+      return { total: cost[n], parts: parts };
+    }
+    function names() {
+      var a = Object.keys(st.fmt).filter(function (k) { return st.fmt[k]; });
+      return a.length ? a.join(', ') : 'video';
+    }
+    function count(to) {
+      cancelAnimationFrame(raf);
+      var el0 = document.getElementById('cTotal'), from = shown;
+      if (reduce || from === to) { shown = to; el0.textContent = fm(to); return; }
+      var t0 = performance.now();
+      (function tick(t) {
+        var k = Math.min(1, (t - t0) / 450), e = 1 - Math.pow(1 - k, 3);
+        shown = Math.round(from + (to - from) * e);
+        el0.textContent = fm(shown);
+        if (k < 1) raf = requestAnimationFrame(tick);
+      })(t0);
+    }
+    function render() {
+      var n = st.n, b = best(n), total, kind, lines, save = '', note;
+      var single = n * 50;
+      if (st.mode === 'konten') {
+        total = b.total; kind = 'Paket konten'; note = 'Harga per paket dan sudah termasuk editing. Format bisa dicampur.';
+        lines = Object.keys(b.parts).map(function (t) { return b.parts[t] + ' x ' + t; }).join(' + ');
+        if (single > total) save = 'Hemat Rp' + rp(single - total) + 'rb dari satuan';
+        if (total > PLAN.starter) {
+          save = 'Starter kelola akun Rp500rb lebih hemat Rp' + rp(total - PLAN.starter) + 'rb';
+          lines += '. Kelola akun Starter sekitar 8 sampai 12 konten per bulan.';
+          if (n > 12) save = 'Kelola akun lebih pas untuk ' + n + ' konten';
+        }
+      } else if (st.mode === 'strategi') {
+        total = PLAN.growth; kind = 'Kelola akun Growth'; note = 'Harga start. Konten rutin, strategi, dan laporan bulanan.';
+        lines = n + ' konten per bulan ditambah strategi dan laporan.';
+        if (b.total > total) save = 'Lebih hemat Rp' + rp(b.total - total) + 'rb dari beli paket konten';
+      } else {
+        total = PLAN.penuh; kind = 'Kelola penuh'; note = 'Harga start. Konten, caption, dan jadwal posting aku yang pegang.';
+        lines = n + ' konten per bulan, caption, dan jadwal posting.';
+      }
+      document.getElementById('cKind').textContent = kind;
+      document.getElementById('cBreak').textContent = lines;
+      document.getElementById('cSave').textContent = save;
+      document.getElementById('cNote').textContent = note;
+      document.getElementById('cUnit').textContent = '/bulan';
+      count(total);
+      last = { total: total, kind: kind, lines: lines };
+    }
+    function pct() { range.style.setProperty('--p', ((st.n - 1) / 29 * 100) + '%'); }
+
+    range.addEventListener('input', function () {
+      st.n = +range.value;
+      document.getElementById('cNv').textContent = st.n;
+      pct(); render();
+    });
+    document.querySelectorAll('#cMode button').forEach(function (b) {
+      b.addEventListener('click', function () {
+        st.mode = b.getAttribute('data-m');
+        document.querySelectorAll('#cMode button').forEach(function (x) {
+          x.setAttribute('aria-checked', x === b ? 'true' : 'false');
+        });
+        render();
+      });
+    });
+    document.querySelectorAll('#cFmt .chip').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var f = b.getAttribute('data-f');
+        var on = !st.fmt[f];
+        var cnt = Object.keys(st.fmt).filter(function (k) { return st.fmt[k]; }).length;
+        if (!on && cnt === 1) return;
+        st.fmt[f] = on;
+        b.classList.toggle('on', on);
+        b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+    });
+    document.getElementById('cGo').addEventListener('click', function () {
+      var msg = 'Halo kv1, aku mau tanya ' + last.kind + ': ' + st.n + ' konten per bulan, format ' + names() +
+        '. Estimasi di situs Rp' + rp(last.total) + 'rb.';
+      var btn = this, old = btn.textContent;
+      function done(t) { btn.textContent = t; setTimeout(function () { btn.textContent = old; }, 2200); }
+      function open() { window.open(DM, '_blank', 'noopener'); }
+      try {
+        navigator.clipboard.writeText(msg).then(function () { done('Tersalin, tempel di DM'); open(); },
+          function () { done('Buka DM, lalu ketik pesanmu'); open(); });
+      } catch (e) { done('Buka DM, lalu ketik pesanmu'); open(); }
+    });
+    pct(); render();
+  })();
+
   /* ---------- karya ---------- */
   var TYPE = {
     slide: { tag: 'Slide', empty: 'Tambahkan gambar slide' },
