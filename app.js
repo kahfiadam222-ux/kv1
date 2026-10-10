@@ -185,8 +185,12 @@
     document.querySelectorAll('#cMode button').forEach(function (b) {
       b.addEventListener('click', function () {
         st.mode = b.getAttribute('data-m');
-        document.querySelectorAll('#cMode button').forEach(function (x) {
-          x.setAttribute('aria-checked', x === b ? 'true' : 'false');
+        var bs = document.querySelectorAll('#cMode button');
+        bs.forEach(function (x, i) {
+          var on = x === b;
+          x.classList.toggle('on', on);
+          x.setAttribute('aria-checked', on ? 'true' : 'false');
+          if (on) document.getElementById('cMode').style.setProperty('--i', i);
         });
         render();
       });

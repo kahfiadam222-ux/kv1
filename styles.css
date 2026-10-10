@@ -458,9 +458,11 @@ p{margin:0}
 #cN::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;margin-top:-10px;border-radius:50%;background:var(--bg);border:2px solid var(--teal);box-shadow:0 0 0 6px rgba(60,198,220,.18),0 4px 14px rgba(0,0,0,.2)}
 #cN::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:var(--bg);border:2px solid var(--teal);box-shadow:0 0 0 6px rgba(60,198,220,.18)}
 #cN:focus-visible{outline:2px solid var(--teal);outline-offset:4px;border-radius:8px}
-.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;padding:4px;border-radius:999px;border:1px solid var(--line);background:var(--bg)}
-.seg button{height:44px;border-radius:999px;font-size:14.5px;font-weight:500;color:var(--muted);transition:background .25s,color .25s}
-.seg button.on{background:var(--pill-bg);color:var(--pill-ink)}
+.seg{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;padding:4px;border-radius:999px;border:1px solid var(--line);background:var(--bg);--i:0}
+.seg::before{content:"";position:absolute;top:4px;bottom:4px;left:4px;width:calc((100% - 8px) / 3);border-radius:999px;background:var(--pill-bg);transform:translateX(calc(var(--i) * 100%));transition:transform .4s cubic-bezier(.65,0,.35,1)}
+.seg button{position:relative;z-index:1;height:44px;border-radius:999px;font-size:14.5px;font-weight:500;color:var(--muted);white-space:nowrap;transition:color .3s}
+.seg button.on{color:var(--pill-ink)}
+@media (prefers-reduced-motion:reduce){.seg::before{transition:none}}
 .chip.on{background:var(--pill-bg);color:var(--pill-ink);border-color:var(--pill-bg)}
 .calc-out{position:relative;padding:clamp(24px,3.4vw,44px);display:flex;flex-direction:column;gap:14px;color:#E8F7F5;overflow:hidden;
   background:radial-gradient(90% 70% at 85% 0%,rgba(60,198,220,.28),transparent 60%),radial-gradient(70% 60% at 0% 100%,rgba(95,227,184,.2),transparent 60%),#06262E}
@@ -476,9 +478,10 @@ p{margin:0}
 .co-btn{margin-top:auto;background:#E8F7F5;color:#06262E;align-self:stretch}
 .co-n{font-size:13px;color:rgba(232,247,245,.6);line-height:1.45}
 @media (max-width:900px){.calc{grid-template-columns:1fr}}
-@media (max-width:420px){.seg button{font-size:13px}}
 
 /* area sentuh footer */
 .foot-col{gap:0}
 .foot-col a{display:flex;align-items:center;min-height:40px}
 .foot-bot a{display:inline-flex;align-items:center;min-height:40px}
+@media (max-width:420px){.seg button{font-size:12.5px;padding:0 2px}}
+@media (max-width:380px){.seg button{font-size:11.5px}}
