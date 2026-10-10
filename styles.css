@@ -270,19 +270,6 @@ p{margin:0}
 @keyframes counter{from{transform:translate(-50%,-50%) rotate(0)}to{transform:translate(-50%,-50%) rotate(-360deg)}}
 
 /* 03 lorong 3D berisi halaman web */
-.tun{position:absolute;inset:14% 0 0;perspective:16em;perspective-origin:50% 50%;overflow:hidden}
-.box{position:absolute;left:12%;right:12%;top:8%;bottom:8%;transform-style:preserve-3d;animation:tunnel 8s var(--e) infinite}
-@keyframes tunnel{0%,100%{transform:rotateZ(-8deg) translateZ(-2em)}50%{transform:rotateZ(8deg) translateZ(2em)}}
-.wall{position:absolute;background:#fff;border-radius:.8em;box-shadow:0 0 0 .14em var(--rim),0 0 1em var(--glow);padding:.6em;overflow:hidden}
-.wall.t{left:0;right:0;top:0;height:120%;transform-origin:top;transform:rotateX(-90deg)}
-.wall.b{left:0;right:0;bottom:0;height:120%;transform-origin:bottom;transform:rotateX(90deg)}
-.wall.l{top:0;bottom:0;left:0;width:120%;transform-origin:left;transform:rotateY(90deg)}
-.wall.r{top:0;bottom:0;right:0;width:120%;transform-origin:right;transform:rotateY(-90deg)}
-.wall i{display:block;height:.5em;border-radius:1em;background:#DCE5F7;margin:.35em 0}
-.wall i:first-child{width:40%;background:var(--blue)}
-.wall i:nth-child(2){width:80%;height:1em;background:linear-gradient(90deg,#0B1E4A,#3D6BFF)}
-.wall i:nth-child(3){width:60%}
-.tun-t{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);text-align:center;font-family:var(--display);font-weight:600;font-size:1.45em;letter-spacing:-.03em;color:var(--blue);animation:breathe 4s var(--e) infinite}
 @keyframes breathe{0%,100%{transform:translateY(-50%) scale(.96);opacity:.75}50%{transform:translateY(-50%) scale(1.04);opacity:1}}
 
 /* 04 teks chrome + koin mengilap */
@@ -502,4 +489,26 @@ p{margin:0}
 .co-b{font-size:15px;min-height:2.6em}
 .co-btn{height:46px;font-size:15px}
 .co-n{font-size:12.5px}
+
+/* 03 jendela web + palet 16 warna */
+.mg-warm{--c:radial-gradient(110% 80% at 50% 100%,#FFE1C4 0%,#FFF0E1 55%,#FFF9F2 100%);--fg:#2A2118;--chip:#1F2937;--chip-ink:#fff;--rim:#EBCDB0;--glow:rgba(255,138,61,.22);box-shadow:inset 0 0 0 1px rgba(235,160,100,.22)}
+.bw{position:absolute;left:9%;right:9%;top:25%;bottom:9%;display:flex;flex-direction:column;border-radius:1.1em;background:#fff;box-shadow:0 0 0 .14em var(--rim),0 1.6em 2.4em -1.2em rgba(120,70,20,.35);overflow:hidden;animation:bwfloat 6s var(--e) infinite}
+@keyframes bwfloat{0%,100%{transform:translateY(1.5%)}50%{transform:translateY(-1.5%)}}
+.bw-bar{display:flex;align-items:center;gap:.4em;height:2.3em;padding:0 .8em;background:#F6EEE6}
+.bw-bar b{width:.7em;height:.7em;border-radius:50%;background:#FF5A5F}
+.bw-bar b:nth-child(2){background:#FFC233}
+.bw-bar b:nth-child(3){background:#3CCB7F}
+.bw-bar span{margin-left:.6em;flex:1;max-width:46%;padding:.2em .8em;border-radius:1em;background:#fff;font-size:.62em;font-weight:600;color:#8A7766}
+.bw-body{flex:1;display:flex;flex-direction:column;gap:1em;padding:1.1em 1.1em 1.2em;min-height:0}
+.bw-hero{display:flex;flex-direction:column;gap:.45em}
+.bw-hero u{display:block;height:.8em;width:62%;border-radius:1em;background:#2A2118;text-decoration:none}
+.bw-hero u+u{height:.5em;width:42%;background:#E6D8CA}
+.bw-pal{flex:1;min-height:0;display:grid;grid-template-columns:repeat(8,1fr);grid-template-rows:repeat(2,1fr);gap:.5em}
+.bw-pal i{border-radius:.6em;background:var(--c);animation:swpop 8s var(--e) infinite backwards;animation-delay:calc(var(--k) * .09s)}
+@keyframes swpop{0%,4%{transform:scale(0);opacity:0}12%{transform:scale(1.12);opacity:1}17%,84%{transform:scale(1);opacity:1}94%,100%{transform:scale(0);opacity:0}}
+.bw-live{position:absolute;top:.5em;right:.7em;display:flex;align-items:center;gap:.4em;padding:.3em .8em;border-radius:2em;background:#1F2937;color:#fff;font-size:.6em;font-weight:700;white-space:nowrap;animation:bwlive 8s var(--e) infinite}
+.bw-live s{width:.7em;height:.7em;border-radius:50%;background:#3CCB7F;box-shadow:0 0 0 0 rgba(60,203,127,.6);animation:livedot 1.6s ease-out infinite}
+@keyframes bwlive{0%,30%{opacity:0;transform:scale(.8)}38%,84%{opacity:1;transform:none}94%,100%{opacity:0;transform:scale(.8)}}
+@keyframes livedot{to{box-shadow:0 0 0 .7em rgba(60,203,127,0)}}
+@media (prefers-reduced-motion:reduce){.bw,.bw-pal i,.bw-live,.bw-live s{animation:none}}
 
